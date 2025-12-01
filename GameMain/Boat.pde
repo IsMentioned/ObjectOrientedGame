@@ -1,5 +1,4 @@
 class Boat {
-  boolean aPressed = false;
   float x = 200;
   float y = 80;
   float velocity = 0;

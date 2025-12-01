@@ -1,5 +1,6 @@
 
 Boat boat;
+Hook hook;
 
 void setup() {
   size(400, 400);
@@ -7,6 +8,7 @@ void setup() {
   rectMode(CORNERS);
 
   boat = new Boat();
+  hook = new Hook();
 }
 
 void draw() {
@@ -17,6 +19,8 @@ void draw() {
   boat.display();
   boat.movement();
   boat.border();
+  
+  hook.display();
   
   seaWavesFront();
 }
