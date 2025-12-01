@@ -30,4 +30,6 @@ class Boat {
     rect(200, 80, 10, 10);
     rectMode(CORNERS);
   }
+  void movement() {
+    
 }
