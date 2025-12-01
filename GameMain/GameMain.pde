@@ -13,7 +13,11 @@ void draw() {
   background(188, 235, 255);
   seaWavesBehind();
   seaFloor();
+  
   boat.display();
+  boat.movement();
+  boat.border();
+  
   seaWavesFront();
 }
 
