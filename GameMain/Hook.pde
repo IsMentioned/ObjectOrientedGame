@@ -24,10 +24,10 @@ class Hook {
     // Otherwise, the velocity will decrease until the boat stops.
     if (keyPressed) {
       if (key == 's') {
-        y += 1;
+        y += 2;
       }
       if (key == 'w') {
-        y -= 1;
+        y -= 2;
       }
     }
     y = constrain(y, 90, 380);
