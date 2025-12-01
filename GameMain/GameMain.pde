@@ -21,6 +21,7 @@ void draw() {
   boat.border();
   
   hook.display();
+  hook.movement();
   
   seaWavesFront();
 }
