@@ -1,6 +1,10 @@
 
+ArrayList<Fish> fish = new ArrayList<Fish>();
+
 Boat boat;
 Hook hook;
+
+boolean spawnedInitial = false;
 
 void setup() {
   size(400, 400);
@@ -15,15 +19,18 @@ void draw() {
   background(188, 235, 255);
   seaWavesBehind();
   seaFloor();
-  
+
   boat.display();
   boat.movement();
   boat.border();
-  
+
   hook.display();
   hook.movement();
-  
+
   seaWavesFront();
+
+  initialFishSpawn();
+  displayFish();
 }
 
 void seaFloor () {
@@ -72,4 +79,20 @@ void seaWavesFront() {
   // bottom right corner
   vertex(width, height);
   endShape();
+}
+
+void initialFishSpawn() {
+  if (!spawnedInitial) {
+    for (int i = 0; i < 5; i++) {
+      fish.add(new Fish(random(50, 350), random(120, 380)));
+      println("fish spawn activated");
+    }
+    spawnedInitial = true;
+  }
+}
+
+void displayFish() {
+  for (int i = 0; i < fish.size(); i++) {
+    fish.get(i).display();
+  }
 }
