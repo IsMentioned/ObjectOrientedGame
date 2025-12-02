@@ -30,7 +30,8 @@ void draw() {
   seaWavesFront();
 
   initialFishSpawn();
-  displayFish();
+  fishDisplay();
+  fishMovement();
 }
 
 void seaFloor () {
@@ -85,14 +86,19 @@ void initialFishSpawn() {
   if (!spawnedInitial) {
     for (int i = 0; i < 5; i++) {
       fish.add(new Fish(random(50, 350), random(120, 380)));
-      println("fish spawn activated");
     }
     spawnedInitial = true;
   }
 }
 
-void displayFish() {
+void fishDisplay() {
   for (int i = 0; i < fish.size(); i++) {
     fish.get(i).display();
+  }
+}
+
+void fishMovement() {
+  for (int i = 0; i < fish.size(); i++) {
+    fish.get(i).movement();
   }
 }
