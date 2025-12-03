@@ -5,7 +5,8 @@ class Fish {
   float timeStartIdle;
   float timeStartActive;
   float guage;
-  
+
+  float fin = -4;
   boolean facingRight = true;
 
   boolean idlePending = true;
@@ -25,49 +26,48 @@ class Fish {
     velocity = new PVector (0, 0);
   }
   void display() {
-    
-    
-    if (velocity.x < 0 || !facingRight){
-      facingRight = false;
-    fill(150, 20, 30);
-    triangle(position.x + 6, position.y, position.x + 11, position.y - 6, position.x + 11, position.y + 6);
-    triangle(position.x -1, position.y - 5, position.x + 3, position.y - 5, position.x + 3, position.y - 9);
-    triangle(position.x -1, position.y + 5, position.x + 3, position.y + 5, position.x + 3, position.y + 8);
-    fill(255, 255, 255);
-    beginShape();
-    vertex(position.x - 5, position.y);
-    vertex(position.x - 7, position.y - 2);
-    vertex(position.x - 3, position.y - 5);
-    vertex(position.x + 3, position.y - 5);
-    vertex(position.x + 9, position.y);
-    vertex(position.x + 3, position.y + 5);
-    vertex(position.x - 3, position.y + 5);
-    vertex(position.x - 7, position.y + 2);
-    endShape();
-    fill(150, 20, 30);
-    triangle(position.x - 2, position.y, position.x + 2, position.y, position.x + 3, position.y + 4);
-    }
-    if (velocity.x > 0 || facingRight){
-      facingRight = true;
-    fill(150, 20, 30);
-    triangle(position.x - 6, position.y, position.x - 11, position.y + 6, position.x - 11, position.y - 6);
-    triangle(position.x + 1, position.y + 5, position.x - 3, position.y + 5, position.x - 3, position.y + 9);
-    triangle(position.x + 1, position.y - 5, position.x - 3, position.y - 5, position.x - 3, position.y - 8);
-    fill(255, 255, 255);
-    beginShape();
-    vertex(position.x + 5, position.y);
-    vertex(position.x + 7, position.y + 2);
-    vertex(position.x + 3, position.y + 5);
-    vertex(position.x - 3, position.y + 5);
-    vertex(position.x - 9, position.y);
-    vertex(position.x - 3, position.y - 5);
-    vertex(position.x + 3, position.y - 5);
-    vertex(position.x + 7, position.y - 2);
-    endShape();
-    fill(150, 20, 30);
-    triangle(position.x + 2, position.y, position.x - 2, position.y, position.x - 3, position.y - 4);
-    }
 
+
+    if (velocity.x < 0 || !facingRight) {
+      facingRight = false;
+      fill(150, 20, 30);
+      triangle(position.x + 6, position.y, position.x + 11, position.y - 6, position.x + 11, position.y + 6);
+      triangle(position.x -1, position.y - 5, position.x + 3, position.y - 5, position.x + 3, position.y - 9);
+      triangle(position.x -1, position.y + 5, position.x + 3, position.y + 5, position.x + 3, position.y + 8);
+      fill(255, 255, 255);
+      beginShape();
+      vertex(position.x - 5, position.y);
+      vertex(position.x - 7, position.y - 2);
+      vertex(position.x - 3, position.y - 5);
+      vertex(position.x + 3, position.y - 5);
+      vertex(position.x + 9, position.y);
+      vertex(position.x + 3, position.y + 5);
+      vertex(position.x - 3, position.y + 5);
+      vertex(position.x - 7, position.y + 2);
+      endShape();
+      fill(150, 20, 30);
+      triangle(position.x - 2, position.y, position.x + 2, position.y, position.x + 3, position.y + fin);
+    }
+    if (velocity.x > 0 || facingRight) {
+      facingRight = true;
+      fill(150, 20, 30);
+      triangle(position.x - 6, position.y, position.x - 11, position.y + 6, position.x - 11, position.y - 6);
+      triangle(position.x + 1, position.y + 5, position.x - 3, position.y + 5, position.x - 3, position.y + 9);
+      triangle(position.x + 1, position.y - 5, position.x - 3, position.y - 5, position.x - 3, position.y - 8);
+      fill(255, 255, 255);
+      beginShape();
+      vertex(position.x + 5, position.y);
+      vertex(position.x + 7, position.y + 2);
+      vertex(position.x + 3, position.y + 5);
+      vertex(position.x - 3, position.y + 5);
+      vertex(position.x - 9, position.y);
+      vertex(position.x - 3, position.y - 5);
+      vertex(position.x + 3, position.y - 5);
+      vertex(position.x + 7, position.y - 2);
+      endShape();
+      fill(150, 20, 30);
+      triangle(position.x + 2, position.y, position.x - 2, position.y, position.x - 3, position.y + fin);
+    }
   }
   void movement() {
     if (idlePending) {
@@ -79,7 +79,6 @@ class Fish {
     }
     if (millis() - timeStartIdle > guage * 1000 && !active && !ghost) {
       activePending = true;
-      println("activePending triggered!");
     }
     if (activePending) {
       activePending = false;
@@ -88,24 +87,34 @@ class Fish {
       timeStartActive = millis();
       //direction of the velocity vector is set to random
       velocity.x = random(-10, 10);
-      velocity.y = random(-3, 3);
+      velocity.y = random(0, 0);
       //magnitude of the velocity vector is set to 5
       velocity.setMag(1);
     }
     if (millis() - timeStartActive > guage * 1000 && active && !ghost) {
       idlePending = true;
       active = false;
-      println("idlePending triggered!");
     }
     position.add(velocity);
     position.y = constrain(position.y, 120, 380);
+  }
+
+  void wiggle() {
+    if (velocity.x < -0.1 || velocity.x > 0.1) {
+      velocity.y += sin(frameCount * 0.3) * 0.1;
+      if ((sin(frameCount * 0.3) * 0.1) > 0) {
+        fin = - 4;
+      } 
+      if ((sin(frameCount * 0.3) * 0.1) <= 0) {
+        fin = 4;
+      }
+    }
   }
 
   void ghost() {
     if (ghostPending && position.x < 200) {
       ghostPending = false;
       ghost = true;
-      println("less than 100!");
       idlePending = false;
       velocity.x = 10;
       velocity.y = random(-3, 3);
@@ -114,7 +123,6 @@ class Fish {
     if (ghostPending && position.x > 300) {
       ghostPending = false;
       ghost = true;
-      println("greater than 300!");
       velocity.x = -10;
       velocity.y = random(-3, 3);
       velocity.setMag(1);

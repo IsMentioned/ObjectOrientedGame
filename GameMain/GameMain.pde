@@ -29,13 +29,13 @@ void draw() {
   hook.display();
   hook.movement();
 
-  seaWavesFront();
-
   initialFishSpawn();
   fishDisplay();
   fishMovement();
 
   fishSub();
+
+  seaWavesFront();
 }
 
 void seaFloor () {
@@ -70,7 +70,7 @@ void seaWavesBehind() {
   endShape();
 }
 void seaWavesFront() {
-  fill(43, 159, 207, 125);
+  fill(43, 159, 207, 100);
 
   // Each of the 80 vertices that make up the wave portion update every frame.
   beginShape();
@@ -105,13 +105,14 @@ void fishMovement() {
   for (int i = 0; i < fish.size(); i++) {
     fish.get(i).movement();
     fish.get(i).ghost();
+    fish.get(i).wiggle();
   }
 }
 
 void fishSub() {
   // the for loop is set backwards to prevent a number from being skipped if a number is removed.
   for (int i = fish.size() - 1; i >= 0; i--) {
-    if ((fish.get(i).position.x < 0 || fish.get(i).position.x > 400) && !fish.get(i).ghost) {
+    if ((fish.get(i).position.x < - 10 || fish.get(i).position.x > 410) && !fish.get(i).ghost) {
       fish.remove(i);
     }
   }
