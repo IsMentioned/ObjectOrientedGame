@@ -6,6 +6,8 @@ Hook hook;
 
 boolean spawnedInitial = false;
 
+int sideSelect;
+
 void setup() {
   size(400, 400);
   background(0);
@@ -32,6 +34,8 @@ void draw() {
   initialFishSpawn();
   fishDisplay();
   fishMovement();
+
+  fishSub();
 }
 
 void seaFloor () {
@@ -100,5 +104,28 @@ void fishDisplay() {
 void fishMovement() {
   for (int i = 0; i < fish.size(); i++) {
     fish.get(i).movement();
+    fish.get(i).ghost();
+  }
+}
+
+void fishSub() {
+  // the for loop is set backwards to prevent a number from being skipped if a number is removed.
+  for (int i = fish.size() - 1; i >= 0; i--) {
+    if ((fish.get(i).position.x < 0 || fish.get(i).position.x > 400) && !fish.get(i).ghost) {
+      fish.remove(i);
+    }
+  }
+  if (fish.size() < 5) {
+    sideSelect = int(random(0, 2));
+    if (sideSelect == 0) {
+      fish.add(new Fish(- 50, random(120, 380)));
+      fish.get(fish.size() - 1).ghostPending = true;
+      fish.get(fish.size() - 1).idlePending = false;
+    }
+    if (sideSelect == 1) {
+      fish.add(new Fish(450, random(120, 380)));
+      fish.get(fish.size() - 1).ghostPending = true;
+      fish.get(fish.size() - 1).idlePending = false;
+    }
   }
 }
