@@ -8,7 +8,6 @@ class Boat {
     position = new PVector (200, 80);
     velocity = new PVector (0, 0);
     accel = new PVector (0, 0);
-    
   }
   void display() {
     noStroke();
@@ -62,11 +61,17 @@ class Boat {
   void border() {
     // if the boat hits either side of the screen, it will stop and bounce back slightly.
     if (position.x < 100) {
+      points -= 20;
+      fill(255, 50, 50);
+      rect(0, 0, 400, 400);
       position.x = 101;
       velocity.x *= -0.1;
       accel.x = 0;
     }
-        if (position.x > 400) {
+    if (position.x > 400) {
+      points -= 20;
+      fill(255, 50, 50);
+      rect(0, 0, 400, 400);
       position.x = 399;
       velocity.x *= -0.1;
       accel.x = 0;

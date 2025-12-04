@@ -212,9 +212,9 @@ void gameMenu() {
 
 void rockBorder() {
   fill(100, 80, 80, 255);
- 
+
   endShape();
-  
+
   beginShape();
   vertex(400, 400);
   vertex(400, 50);
@@ -235,7 +235,6 @@ void rockBorder() {
   vertex(45, 320);
   vertex(45, 400);
   endShape();
- 
 }
 
 
