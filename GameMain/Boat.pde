@@ -52,10 +52,10 @@ class Boat {
         accel.x = 0.01;
       }
     } else if (velocity.x > 0) {
-      velocity.x -= 0.01;
+      velocity.x -= 0.005;
       accel.x = 0;
     } else if (velocity.x < 0) {
-      velocity.x += 0.01;
+      velocity.x += 0.005;
       accel.x = 0;
     }
   }

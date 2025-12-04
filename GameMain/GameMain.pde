@@ -29,6 +29,8 @@ void setup() {
 
 void draw() {
   background(188, 235, 255);
+  fill(255, 255, 200);
+
   seaWavesBehind();
   seaFloor();
 
@@ -39,11 +41,14 @@ void draw() {
   hook.display();
   hook.movement();
 
+  rockBorder();
+
   initialFishSpawn();
   fishDisplay();
   fishMovement();
   fishSub();
   fishPoints();
+
 
   seaWavesFront();
 
@@ -204,6 +209,35 @@ void gameMenu() {
     outcome = "YOU WIN!";
   }
 }
+
+void rockBorder() {
+  fill(100, 80, 80, 255);
+ 
+  endShape();
+  
+  beginShape();
+  vertex(400, 400);
+  vertex(400, 50);
+  vertex(370, 52);
+  vertex(360, 85);
+  vertex(370, 200);
+  vertex(355, 220);
+  vertex(360, 400);
+  endShape();
+
+  beginShape();
+  vertex(0, 400);
+  vertex(0, 50);
+  vertex(30, 50);
+  vertex(31, 85);
+  vertex(37, 89);
+  vertex(29, 290);
+  vertex(45, 320);
+  vertex(45, 400);
+  endShape();
+ 
+}
+
 
 void mouseClicked() {
   if (mouseX > 140 && mouseX < 300 && mouseY > 260 && mouseY < 340 && start) {
