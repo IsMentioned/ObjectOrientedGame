@@ -44,7 +44,6 @@ void draw() {
   fishMovement();
   fishSub();
   fishPoints();
-  fishOneRule();
 
   seaWavesFront();
 
@@ -142,14 +141,6 @@ void fishSub() {
       fish.add(new Fish(450, random(120, 380), random(0.5, 2)));
       fish.get(fish.size() - 1).ghostPending = true;
       fish.get(fish.size() - 1).idlePending = false;
-    }
-  }
-}
-
-void fishOneRule() {
-  for (int i = 0; i < fish.size(); i++) {
-    if (fish.get(i).hooked) {
-      hookActive = true;
     }
   }
 }
