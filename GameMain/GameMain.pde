@@ -55,7 +55,7 @@ void seaFloor () {
 }
 
 void seaWavesBehind() {
-  fill(0, 80, 110);
+  fill(100, 150, 200);
   // Each of the 80 vertices that make up the wave portion update every frame.
   beginShape();
   //bottom left corner
@@ -70,7 +70,7 @@ void seaWavesBehind() {
   endShape();
 }
 void seaWavesFront() {
-  fill(43, 159, 207, 100);
+  fill(43, 159, 207, 80);
 
   // Each of the 80 vertices that make up the wave portion update every frame.
   beginShape();
@@ -89,7 +89,7 @@ void seaWavesFront() {
 void initialFishSpawn() {
   if (!spawnedInitial) {
     for (int i = 0; i < 5; i++) {
-      fish.add(new Fish(random(50, 350), random(120, 380)));
+      fish.add(new Fish(random(50, 350), random(120, 380), random(0.5, 2)));
     }
     spawnedInitial = true;
   }
@@ -119,12 +119,12 @@ void fishSub() {
   if (fish.size() < 5) {
     sideSelect = int(random(0, 2));
     if (sideSelect == 0) {
-      fish.add(new Fish(- 50, random(120, 380)));
+      fish.add(new Fish(- 50, random(120, 380), random(0.5, 2)));
       fish.get(fish.size() - 1).ghostPending = true;
       fish.get(fish.size() - 1).idlePending = false;
     }
     if (sideSelect == 1) {
-      fish.add(new Fish(450, random(120, 380)));
+      fish.add(new Fish(450, random(120, 380), random(0.5, 2)));
       fish.get(fish.size() - 1).ghostPending = true;
       fish.get(fish.size() - 1).idlePending = false;
     }

@@ -1,10 +1,20 @@
 class Fish {
   float x;
   float y;
+  float size;
 
   float timeStartIdle;
   float timeStartActive;
   float guage;
+
+  float bodyR = random(50, 200);
+  float bodyG = random(20, 150);
+  float bodyB = random(0, 50);
+
+  float accentR = random(200, 250);
+  float accentG = random(70, 250);
+  float accentB = random(50, 100);
+
 
   float fin = -4;
   boolean facingRight = true;
@@ -19,9 +29,10 @@ class Fish {
   PVector position;
   PVector velocity;
 
-  Fish(float tempX, float tempY) {
+  Fish(float tempX, float tempY, float tempSize) {
     x = tempX;
     y = tempY;
+    size = tempSize;
     position = new PVector (x, y);
     velocity = new PVector (0, 0);
   }
@@ -30,43 +41,47 @@ class Fish {
 
     if (velocity.x < 0 || !facingRight) {
       facingRight = false;
-      fill(150, 20, 30);
-      triangle(position.x + 6, position.y, position.x + 11, position.y - 6, position.x + 11, position.y + 6);
-      triangle(position.x -1, position.y - 5, position.x + 3, position.y - 5, position.x + 3, position.y - 9);
-      triangle(position.x -1, position.y + 5, position.x + 3, position.y + 5, position.x + 3, position.y + 8);
-      fill(255, 255, 255);
+      fill(accentR, accentG, accentB);
+      triangle(position.x + 6 * size, position.y, position.x + 11 * size, position.y - 6 * size, position.x + 11 * size, position.y + 6 * size);
+      triangle(position.x -1 * size, position.y - 5 * size, position.x + 3 * size, position.y - 5 * size, position.x + 3 * size, position.y - 9 * size);
+      triangle(position.x -1 * size, position.y + 5 * size, position.x + 3 * size, position.y + 5 * size, position.x + 3 * size, position.y + 8 * size);
+      fill(bodyR, bodyG, bodyB);
       beginShape();
-      vertex(position.x - 5, position.y);
-      vertex(position.x - 7, position.y - 2);
-      vertex(position.x - 3, position.y - 5);
-      vertex(position.x + 3, position.y - 5);
-      vertex(position.x + 9, position.y);
-      vertex(position.x + 3, position.y + 5);
-      vertex(position.x - 3, position.y + 5);
-      vertex(position.x - 7, position.y + 2);
+      vertex(position.x - 5 * size, position.y);
+      vertex(position.x - 7 * size, position.y - 2 * size);
+      vertex(position.x - 3 * size, position.y - 5 * size);
+      vertex(position.x + 3 * size, position.y - 5 * size);
+      vertex(position.x + 7 * size, position.y - 3 * size);
+      vertex(position.x + 9 * size, position.y);
+      vertex(position.x + 7 * size, position.y + 3 * size);
+      vertex(position.x + 3 * size, position.y + 5 * size);
+      vertex(position.x - 3 * size, position.y + 5 * size);
+      vertex(position.x - 7 * size, position.y + 2 * size);
       endShape();
-      fill(150, 20, 30);
-      triangle(position.x - 2, position.y, position.x + 2, position.y, position.x + 3, position.y + fin);
+      fill(accentR, accentG, accentB);
+      triangle(position.x - 2 * size, position.y, position.x + 2 * size, position.y, position.x + 3 * size, position.y + fin * size);
     }
     if (velocity.x > 0 || facingRight) {
       facingRight = true;
-      fill(150, 20, 30);
-      triangle(position.x - 6, position.y, position.x - 11, position.y + 6, position.x - 11, position.y - 6);
-      triangle(position.x + 1, position.y + 5, position.x - 3, position.y + 5, position.x - 3, position.y + 9);
-      triangle(position.x + 1, position.y - 5, position.x - 3, position.y - 5, position.x - 3, position.y - 8);
-      fill(255, 255, 255);
+      fill(accentR, accentG, accentB);
+      triangle(position.x - 6 * size, position.y, position.x - 11 * size, position.y + 6 * size, position.x - 11 * size, position.y - 6 * size);
+      triangle(position.x + 1 * size, position.y + 5 * size, position.x - 3 * size, position.y + 5 * size, position.x - 3 * size, position.y + 9 * size);
+      triangle(position.x + 1 * size, position.y - 5 * size, position.x - 3 * size, position.y - 5 * size, position.x - 3 * size, position.y - 8 * size);
+      fill(bodyR, bodyG, bodyB);
       beginShape();
-      vertex(position.x + 5, position.y);
-      vertex(position.x + 7, position.y + 2);
-      vertex(position.x + 3, position.y + 5);
-      vertex(position.x - 3, position.y + 5);
-      vertex(position.x - 9, position.y);
-      vertex(position.x - 3, position.y - 5);
-      vertex(position.x + 3, position.y - 5);
-      vertex(position.x + 7, position.y - 2);
+      vertex(position.x + 5 * size, position.y);
+      vertex(position.x + 7 * size, position.y + 2 * size);
+      vertex(position.x + 3 * size, position.y + 5 * size);
+      vertex(position.x - 3 * size, position.y + 5 * size);
+      vertex(position.x - 7 * size, position.y + 3 * size);
+      vertex(position.x - 9 * size, position.y);
+      vertex(position.x - 7 * size, position.y - 3 * size);
+      vertex(position.x - 3 * size, position.y - 5 * size);
+      vertex(position.x + 3 * size, position.y - 5 * size);
+      vertex(position.x + 7 * size, position.y - 2 * size);
       endShape();
-      fill(150, 20, 30);
-      triangle(position.x + 2, position.y, position.x - 2, position.y, position.x - 3, position.y + fin);
+      fill(accentR, accentG, accentB);
+      triangle(position.x + 2 * size, position.y, position.x - 2 * size, position.y, position.x - 3 * size, position.y + fin * size);
     }
   }
   void movement() {
@@ -104,7 +119,7 @@ class Fish {
       velocity.y += sin(frameCount * 0.3) * 0.1;
       if ((sin(frameCount * 0.3) * 0.1) > 0) {
         fin = - 4;
-      } 
+      }
       if ((sin(frameCount * 0.3) * 0.1) <= 0) {
         fin = 4;
       }
