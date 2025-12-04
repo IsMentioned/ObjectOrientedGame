@@ -28,6 +28,18 @@ class Fish {
 
   PVector position;
   PVector velocity;
+  PVector lure;
+
+  float timeStartLure;
+  boolean timerActive;
+  boolean lured = false;
+
+  boolean hooked = false;
+  boolean caught = false;
+
+  boolean pointsPending = false;
+
+  float opacity = 255;
 
   Fish(float tempX, float tempY, float tempSize) {
     x = tempX;
@@ -35,17 +47,18 @@ class Fish {
     size = tempSize;
     position = new PVector (x, y);
     velocity = new PVector (0, 0);
+    lure = new PVector (0, 0);
   }
   void display() {
 
 
-    if (velocity.x < 0 || !facingRight) {
+    if (velocity.x < 0 || !facingRight || hooked) {
       facingRight = false;
-      fill(accentR, accentG, accentB);
+      fill(accentR, accentG, accentB, opacity);
       triangle(position.x + 6 * size, position.y, position.x + 11 * size, position.y - 6 * size, position.x + 11 * size, position.y + 6 * size);
       triangle(position.x -1 * size, position.y - 5 * size, position.x + 3 * size, position.y - 5 * size, position.x + 3 * size, position.y - 9 * size);
       triangle(position.x -1 * size, position.y + 5 * size, position.x + 3 * size, position.y + 5 * size, position.x + 3 * size, position.y + 8 * size);
-      fill(bodyR, bodyG, bodyB);
+      fill(bodyR, bodyG, bodyB, opacity);
       beginShape();
       vertex(position.x - 5 * size, position.y);
       vertex(position.x - 7 * size, position.y - 2 * size);
@@ -58,16 +71,16 @@ class Fish {
       vertex(position.x - 3 * size, position.y + 5 * size);
       vertex(position.x - 7 * size, position.y + 2 * size);
       endShape();
-      fill(accentR, accentG, accentB);
+      fill(accentR, accentG, accentB, opacity);
       triangle(position.x - 2 * size, position.y, position.x + 2 * size, position.y, position.x + 3 * size, position.y + fin * size);
     }
-    if (velocity.x > 0 || facingRight) {
+    if ((velocity.x > 0 || facingRight) && !hooked) {
       facingRight = true;
-      fill(accentR, accentG, accentB);
+      fill(accentR, accentG, accentB, opacity);
       triangle(position.x - 6 * size, position.y, position.x - 11 * size, position.y + 6 * size, position.x - 11 * size, position.y - 6 * size);
       triangle(position.x + 1 * size, position.y + 5 * size, position.x - 3 * size, position.y + 5 * size, position.x - 3 * size, position.y + 9 * size);
       triangle(position.x + 1 * size, position.y - 5 * size, position.x - 3 * size, position.y - 5 * size, position.x - 3 * size, position.y - 8 * size);
-      fill(bodyR, bodyG, bodyB);
+      fill(bodyR, bodyG, bodyB, opacity);
       beginShape();
       vertex(position.x + 5 * size, position.y);
       vertex(position.x + 7 * size, position.y + 2 * size);
@@ -80,7 +93,7 @@ class Fish {
       vertex(position.x + 3 * size, position.y - 5 * size);
       vertex(position.x + 7 * size, position.y - 2 * size);
       endShape();
-      fill(accentR, accentG, accentB);
+      fill(accentR, accentG, accentB, opacity);
       triangle(position.x + 2 * size, position.y, position.x - 2 * size, position.y, position.x - 3 * size, position.y + fin * size);
     }
   }
@@ -111,7 +124,9 @@ class Fish {
       active = false;
     }
     position.add(velocity);
-    position.y = constrain(position.y, 120, 380);
+    if (!hooked) {
+      position.y = constrain(position.y, 120, 380);
+    }
   }
 
   void wiggle() {
@@ -127,7 +142,7 @@ class Fish {
   }
 
   void ghost() {
-    if (ghostPending && position.x < 200) {
+    if (ghostPending && position.x < 100) {
       ghostPending = false;
       ghost = true;
       idlePending = false;
@@ -144,6 +159,49 @@ class Fish {
     }
     if (ghost && position.x > 100 && position.x < 300) {
       ghost = false;
+    }
+  }
+
+  void lure() {
+    if (dist(position.x, position.y, hook.position.x, hook.position.y) < 30) {
+      if (!timerActive) {
+        timerActive = true;
+        timeStartLure = millis();
+      }
+      fill(255, 255, 255);
+      if (facingRight && !lured && !hooked) {
+        ellipse(position.x - 1 * size, position.y - 10 * size, 5, 5);
+      } else if (!hooked) {
+        ellipse(position.x + 1 * size, position.y - 10 * size, 5, 5);
+      }
+
+      if (millis() - timeStartLure > 1000 && !hooked) {
+        lured = true;
+        velocity = PVector.sub(hook.position, position);
+        velocity.setMag(1);
+        fill(0, 255, 0);
+        ellipse(position.x + 1 * size, position.y - 10 * size, 5, 5);
+        if (dist(position.x, position.y, hook.position.x, hook.position.y) < 5) {
+          hooked = true;
+          position = hook.position;
+        }
+      }
+    } else {
+      timerActive = false;
+      lured = false;
+      hooked = false;
+    }
+    if (hooked && !caught) {
+      position = hook.position;
+      if (position.y < 91) {
+        caught = true;
+      }
+    }
+    if (hooked && caught) {
+      opacity -= 10;
+      if (opacity > 5) {
+        pointsPending = true;
+      }
     }
   }
 }

@@ -32,8 +32,8 @@ void draw() {
   initialFishSpawn();
   fishDisplay();
   fishMovement();
-
   fishSub();
+  fishPoints();
 
   seaWavesFront();
 }
@@ -106,6 +106,7 @@ void fishMovement() {
     fish.get(i).movement();
     fish.get(i).ghost();
     fish.get(i).wiggle();
+    fish.get(i).lure();
   }
 }
 
@@ -129,4 +130,7 @@ void fishSub() {
       fish.get(fish.size() - 1).idlePending = false;
     }
   }
+}
+
+void fishPoints() {
 }

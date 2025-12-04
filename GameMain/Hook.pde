@@ -1,22 +1,24 @@
 class Hook {
   float y = 90;
+  PVector position;
 
   Hook() {
   }
   void display() {
+    position = new PVector (boat.position.x, y);
     noFill();
     stroke(255);
     strokeWeight(2);
     //hook
     // the hook takes the boat's x position
-    arc(boat.x - 5, y, 10, 10, 0, HALF_PI);
-    arc(boat.x - 5, y, 10, 10, HALF_PI, PI);
-    line(boat.x - 10, y, boat.x - 10, y - 3);
-    line(boat.x - 10, y - 3, boat.x - 8, y);
-    line(boat.x, y, boat.x, y - 10);
+    arc(position.x - 5, y, 10, 10, 0, HALF_PI);
+    arc(position.x - 5, y, 10, 10, HALF_PI, PI);
+    line(position.x - 10, y, position.x - 10, y - 3);
+    line(position.x - 10, y - 3, position.x - 8, y);
+    line(position.x, y, position.x, y - 10);
     //hook line
     stroke(150);
-    line(boat.x, y - 10, boat.x, 80);
+    line(position.x, y - 10, position.x, 80);
     noStroke();
   }
   void movement() {
