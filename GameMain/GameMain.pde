@@ -7,6 +7,7 @@ Hook hook;
 boolean spawnedInitial = false;
 
 int sideSelect;
+float points = 0;
 
 void setup() {
   size(400, 400);
@@ -133,4 +134,19 @@ void fishSub() {
 }
 
 void fishPoints() {
+  noFill();
+  strokeWeight(2);
+  stroke(150);
+  rect(310, 10, 390, 30);
+  noStroke();
+  fill(50, 200, 50);
+  rect(310, 10, 310 + points, 30);
+
+  for (int i = fish.size() - 1; i >= 0; i--) {
+    if (fish.get(i).pointsPending) {
+      fish.get(i).pointsPending = false;
+      points += fish.get(i).size * 10;
+      fish.remove(i);
+    }
+  }
 }
