@@ -163,7 +163,7 @@ class Fish {
   }
 
   void lure() {
-    if (dist(position.x, position.y, hook.position.x, hook.position.y) < 30) {
+    if (dist(position.x, position.y, hook.position.x, hook.position.y) < 30 && !hookActive || timerActive) {
       if (!timerActive) {
         timerActive = true;
         timeStartLure = millis();
@@ -199,6 +199,7 @@ class Fish {
     }
     if (hooked && caught) {
       opacity -= 10;
+      hookActive = false;
       if (opacity > 5) {
         pointsPending = true;
       }

@@ -9,6 +9,15 @@ boolean spawnedInitial = false;
 int sideSelect;
 float points = 0;
 
+boolean start = true;
+boolean win = false;
+boolean loss = false;
+
+boolean hookActive;
+
+String outcome = "";
+
+
 void setup() {
   size(400, 400);
   background(0);
@@ -35,8 +44,12 @@ void draw() {
   fishMovement();
   fishSub();
   fishPoints();
+  fishOneRule();
 
   seaWavesFront();
+
+  gameMenu();
+  
 }
 
 void seaFloor () {
@@ -133,6 +146,14 @@ void fishSub() {
   }
 }
 
+void fishOneRule() {
+  for (int i = 0; i < fish.size(); i++) {
+    if (fish.get(i).hooked) {
+      hookActive = true;
+    }
+  }
+}
+
 void fishPoints() {
   noFill();
   strokeWeight(2);
@@ -141,6 +162,7 @@ void fishPoints() {
   noStroke();
   fill(50, 200, 50);
   rect(310, 10, 310 + points, 30);
+  points = constrain(points, 0, 80);
 
   for (int i = fish.size() - 1; i >= 0; i--) {
     if (fish.get(i).pointsPending) {
@@ -148,5 +170,36 @@ void fishPoints() {
       points += fish.get(i).size * 10;
       fish.remove(i);
     }
+  }
+  if (points > 80) {
+    win = true;
+    start = true;
+  }
+}
+
+
+void gameMenu() {
+  if (start) {
+    fill(50, 50, 100);
+    rect(0, 0, 400, 400);
+    fill(150, 150, 255);
+    rect(140, 300, 260, 340);
+    textSize(30);
+    fill(255, 255, 255);
+    text("PLAY", 170, 330);
+    textSize(60);
+    text(outcome, 90, 100);
+  }
+  if (win) {
+    outcome = "YOU WIN!";
+  }
+}
+
+void mouseClicked() {
+  if (mouseX > 140 && mouseX < 300 && mouseY > 260 && mouseY < 340 && start) {
+    start = false;
+    win = false;
+    loss = false;
+    points = 0;
   }
 }
