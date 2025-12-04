@@ -48,7 +48,6 @@ void draw() {
   seaWavesFront();
 
   gameMenu();
-  
 }
 
 void seaFloor () {
@@ -162,7 +161,7 @@ void fishPoints() {
       fish.remove(i);
     }
   }
-  if (points > 80) {
+  if (points == 80) {
     win = true;
     start = true;
   }
@@ -180,6 +179,26 @@ void gameMenu() {
     text("PLAY", 170, 330);
     textSize(60);
     text(outcome, 90, 100);
+
+    fill(255, 255, 255);
+    triangle(220 - 6 * 10, 200, 220 - 11 * 10, 200 + 6 * 10, 220 - 11 * 10, 200 - 6 * 10);
+    triangle(220 + 1 * 10, 200 + 5 * 10, 220 - 3 * 10, 200 + 5 * 10, 220 - 3 * 10, 200 + 9 * 10);
+    triangle(220 + 1 * 10, 200 - 5 * 10, 220 - 3 * 10, 200 - 5 * 10, 220 - 3 * 10, 200 - 8 * 10);
+    fill(55, 55, 255);
+    beginShape();
+    vertex(220 + 5 * 10, 200);
+    vertex(220 + 7 * 10, 200 + 2 * 10);
+    vertex(220 + 3 * 10, 200 + 5 * 10);
+    vertex(220 - 3 * 10, 200 + 5 * 10);
+    vertex(220 - 7 * 10, 200 + 3 * 10);
+    vertex(220 - 9 * 10, 200);
+    vertex(220 - 7 * 10, 200 - 3 * 10);
+    vertex(220 - 3 * 10, 200 - 5 * 10);
+    vertex(220 + 3 * 10, 200 - 5 * 10);
+    vertex(220 + 7 * 10, 200 - 2 * 10);
+    endShape();
+    fill(255, 255, 255);
+    triangle(220 + 2 * 10, 200, 220 - 2 * 10, 200, 220 - 3 * 10, 200 + 4 * 10);
   }
   if (win) {
     outcome = "YOU WIN!";
