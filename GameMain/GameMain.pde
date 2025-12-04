@@ -244,5 +244,6 @@ void mouseClicked() {
     win = false;
     loss = false;
     points = 0;
+    boat.position.set(200, 80);
   }
 }
