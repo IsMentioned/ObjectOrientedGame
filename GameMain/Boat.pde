@@ -3,6 +3,7 @@ class Boat {
   PVector velocity;
   PVector accel;
 
+// Boat Constructor
   Boat() {
     fill(255, 255, 255);
     position = new PVector (200, 80);
@@ -18,7 +19,7 @@ class Boat {
     fill(255, 255, 178);
     rect(position.x - 60, position.y - 22, position.x - 45, position.y -10);
     rect(position.x - 72, position.y - 22, position.x - 65, position.y -10);
-    // boat hulld
+    // boat hull
     fill(200, 200, 200);
     arc(position.x - 20, position.y, 40, 60, 0, HALF_PI);
     arc(position.x - 80, position.y, 40, 60, HALF_PI, PI );
@@ -60,6 +61,7 @@ class Boat {
   }
   void border() {
     // if the boat hits either side of the screen, it will stop and bounce back slightly.
+    //Left side
     if (position.x < 100) {
       points -= 20;
       fill(255, 50, 50);
@@ -68,6 +70,7 @@ class Boat {
       velocity.x *= -0.1;
       accel.x = 0;
     }
+    //Right side
     if (position.x > 400) {
       points -= 20;
       fill(255, 50, 50);

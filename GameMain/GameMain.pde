@@ -1,4 +1,3 @@
-
 ArrayList<Fish> fish = new ArrayList<Fish>();
 
 Boat boat;
@@ -11,7 +10,6 @@ float points = 0;
 
 boolean start = true;
 boolean win = false;
-boolean loss = false;
 
 boolean hookActive;
 
@@ -31,6 +29,7 @@ void draw() {
   background(188, 235, 255);
   fill(255, 255, 200);
 
+  //custom function calls
   seaWavesBehind();
   seaFloor();
 
@@ -48,7 +47,6 @@ void draw() {
   fishMovement();
   fishSub();
   fishPoints();
-
 
   seaWavesFront();
 
@@ -72,6 +70,7 @@ void seaFloor () {
 }
 
 void seaWavesBehind() {
+  //First wave is set behind the boat.
   fill(100, 150, 200);
   // Each of the 80 vertices that make up the wave portion update every frame.
   beginShape();
@@ -87,8 +86,8 @@ void seaWavesBehind() {
   endShape();
 }
 void seaWavesFront() {
+  //Second wave is set in front of the boat.
   fill(43, 159, 207, 80);
-
   // Each of the 80 vertices that make up the wave portion update every frame.
   beginShape();
   //bottom left corner
@@ -104,6 +103,7 @@ void seaWavesFront() {
 }
 
 void initialFishSpawn() {
+  //5 fish are added to an array list when the program starts.
   if (!spawnedInitial) {
     for (int i = 0; i < 5; i++) {
       fish.add(new Fish(random(50, 350), random(120, 380), random(0.5, 2)));
@@ -113,12 +113,14 @@ void initialFishSpawn() {
 }
 
 void fishDisplay() {
+  //Calls the display function for each fish object within the array list.
   for (int i = 0; i < fish.size(); i++) {
     fish.get(i).display();
   }
 }
 
 void fishMovement() {
+  //Calls the movement functions for each fish object within the array list.
   for (int i = 0; i < fish.size(); i++) {
     fish.get(i).movement();
     fish.get(i).ghost();
@@ -128,12 +130,16 @@ void fishMovement() {
 }
 
 void fishSub() {
-  // the for loop is set backwards to prevent a number from being skipped if a number is removed.
+  // If a fish is outside the screen, the fish is removed from the array list.
+  // The loop does not work if 'ghost' mode is active.
+  // The loop starts at 4 and goes down to prevent a number from being skipped when a fish is removed.
   for (int i = fish.size() - 1; i >= 0; i--) {
     if ((fish.get(i).position.x < - 10 || fish.get(i).position.x > 410) && !fish.get(i).ghost) {
       fish.remove(i);
     }
   }
+  // If there are less than 5 fish, a new fish is added to either left or right side, offscreen.
+  // Ghost mode is called, and idle mode is set to false.
   if (fish.size() < 5) {
     sideSelect = int(random(0, 2));
     if (sideSelect == 0) {
@@ -158,14 +164,18 @@ void fishPoints() {
   fill(50, 200, 50);
   rect(310, 10, 310 + points, 30);
   points = constrain(points, 0, 80);
-
+// The loop checks the array list for caught fish. 
   for (int i = fish.size() - 1; i >= 0; i--) {
+      // Once a fish is caught, it's point value is added to the points variable value.
     if (fish.get(i).pointsPending) {
       fish.get(i).pointsPending = false;
+      // The point value of a fish is dependent of it's size.
       points += fish.get(i).size * 10;
+      // The fish is then removed from the array list.
       fish.remove(i);
     }
   }
+  // If points is equal to 80, the player wins
   if (points == 80) {
     win = true;
     start = true;
@@ -174,6 +184,7 @@ void fishPoints() {
 
 
 void gameMenu() {
+// The start menu display, which is active upon program initization. 
   if (start) {
     fill(50, 50, 100);
     rect(0, 0, 400, 400);
@@ -183,8 +194,10 @@ void gameMenu() {
     fill(255, 255, 255);
     text("PLAY", 170, 330);
     textSize(60);
+    // Outcome can either be _ or YOU WIN!, depending on the game state.
     text(outcome, 90, 100);
 
+// Fish diagram on start menu.
     fill(255, 255, 255);
     triangle(220 - 6 * 10, 200, 220 - 11 * 10, 200 + 6 * 10, 220 - 11 * 10, 200 - 6 * 10);
     triangle(220 + 1 * 10, 200 + 5 * 10, 220 - 3 * 10, 200 + 5 * 10, 220 - 3 * 10, 200 + 9 * 10);
@@ -205,16 +218,19 @@ void gameMenu() {
     fill(255, 255, 255);
     triangle(220 + 2 * 10, 200, 220 - 2 * 10, 200, 220 - 3 * 10, 200 + 4 * 10);
   }
+  // If the player wins, a text will display YOU WIN!.
   if (win) {
     outcome = "YOU WIN!";
   }
 }
 
 void rockBorder() {
+  //Rocks that signify the borders.
+  
+  
   fill(100, 80, 80, 255);
-
-  endShape();
-
+  
+  // Left rock
   beginShape();
   vertex(400, 400);
   vertex(400, 50);
@@ -225,6 +241,7 @@ void rockBorder() {
   vertex(360, 400);
   endShape();
 
+  // Right rock
   beginShape();
   vertex(0, 400);
   vertex(0, 50);
@@ -239,10 +256,10 @@ void rockBorder() {
 
 
 void mouseClicked() {
+  // If the player clicks on the 'PLAY" button, the game will start.
   if (mouseX > 140 && mouseX < 300 && mouseY > 260 && mouseY < 340 && start) {
     start = false;
     win = false;
-    loss = false;
     points = 0;
     boat.position.set(200, 80);
   }
